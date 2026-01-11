@@ -10,6 +10,7 @@ import com.example.coffee_product_api.dto.response.PaginationResponse;
 import com.example.coffee_product_api.dto.response.ProductListResponse;
 import com.example.coffee_product_api.dto.response.ProductResponse;
 import com.example.coffee_product_api.entity.Product;
+import com.example.coffee_product_api.exception.ResourceNotFoundException;
 import com.example.coffee_product_api.repository.ProductRepository;
 
 @Service
@@ -48,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProduct(String slug) {
         
         Product product = productRepository.findBySlug(slug)
-            .orElseThrow(() -> new RuntimeException("Product not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         return ProductResponse.from(product);
     }
